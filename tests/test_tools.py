@@ -1,5 +1,6 @@
 import pytest
 from unittest.mock import patch
+from pathlib import Path
 import sys
 import subprocess
 import concurrent.futures
@@ -48,9 +49,10 @@ async def test_cli_tools(running_server):
 @pytest.mark.skipif(sys.platform == "win32", reason="does not run on windows")
 async def test_cli_tools_which_require_sigint(running_server):
     url = running_server
+    repo_root = Path(__file__).parent.parent
     tools = (
-        ["tools/uaserver"],
-        ["tools/uasubscribe", "-u", url, "-n", RW_NODE]
+        [str(repo_root / "tools/uaserver")],
+        [str(repo_root / "tools/uasubscribe"), "-u", url, "-n", RW_NODE]
     )
     for tool in tools:
         proc = subprocess.Popen(tool, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
