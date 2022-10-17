@@ -49,7 +49,7 @@ async def test_cli_tools(running_server):
 @pytest.mark.skipif(sys.platform == "win32", reason="does not run on windows")
 async def test_cli_tools_which_require_sigint(running_server):
     url = running_server
-    repo_root = Path(__file__).parent.parent
+    repo_root = Path().absolute()
     tools = (
         [str(repo_root / "tools/uaserver")],
         [str(repo_root / "tools/uasubscribe"), "-u", url, "-n", RW_NODE]
